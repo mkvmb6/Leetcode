@@ -12,11 +12,14 @@
  * }
  */
 public class Solution {
+    StringBuilder res = new StringBuilder();
     public string GetDirections(TreeNode root, int startValue, int destValue) {
         var lca = FindLCA(root, startValue, destValue);
-        var leftPath = MakePath(lca, startValue, new StringBuilder(), true);
-        var rightPath = MakePath(lca, destValue, new StringBuilder(), false);
-        return leftPath + rightPath;
+         MakeAmanPath(lca, startValue, true);
+        var leftPath = res.ToString();
+        res.Clear();
+        MakeAmanPath(lca, destValue, false);
+        return leftPath+new string(res.ToString().Reverse().ToArray());
     }
     
     TreeNode FindLCA(TreeNode root, int left, int right){
@@ -51,6 +54,26 @@ public class Solution {
             else prevPath.Length--;
         }
         return leftPath!=null?leftPath:rightPath;
+    }
+    
+    bool MakeAmanPath(TreeNode root, int target, bool traceUp){
+        if(root==null){
+            return false;
+        }
+        if(target==root.val){
+            return true;
+        }
+        var isLeftFound = MakeAmanPath(root.left, target, traceUp);
+        var isRightFound = false;
+        if(isLeftFound){
+            res.Append(traceUp?"U":"L");
+        }
+        else {
+            isRightFound = MakeAmanPath(root.right, target, traceUp);
+            if(isRightFound)
+                res.Append(traceUp?"U":"R");
+        }
+        return isLeftFound || isRightFound;
     }
     
 }
