@@ -5,7 +5,7 @@ public class Solution {
         while(r!=0){
             if((r&1)==1){
                 count++;
-                r=r & (~1);
+                //r=r & (~1);
             }
             r = r >> 1;
         }
