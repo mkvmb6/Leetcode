@@ -1,17 +1,28 @@
 public class MyCalendar {
-    List<List<int>> bookings;
+    SortedList<int, int> bookings;
 
     public MyCalendar() {
-        bookings=new List<List<int>>();
+        bookings=new SortedList<int, int>();
     }
     
     public bool Book(int start, int end) {
-        foreach(var booking in bookings){
-            if(end>booking[0] && start < booking[1]){
+        int left = 0, right = bookings.Count - 1;
+        while(left <= right){
+            var mid = left + (right - left)/2;
+            var bookingStart = bookings.Keys[mid];
+            var bookingEnd = bookings.Values[mid];
+            if(end > bookingStart && start < bookingEnd){
                 return false;
             }
+            else if(start < bookingStart){
+                right = mid - 1;
+            }
+            else{
+                left = mid + 1;
+            }
+            
         }
-        bookings.Add(new List<int>{start, end});
+        bookings.Add(start, end);
         return true;
     }
 }
