@@ -1,0 +1,46 @@
+public class Solution {
+    public int TotalNQueens(int n) {        
+        var board = GetEmptyBoard(n);
+        var columns = new int[n];
+        var upperDiagonal = new int[2*n - 1];
+        var lowerDiagonal = new int[2*n - 1];
+        return FindQueenPositions(0, board, n, columns, upperDiagonal, lowerDiagonal);
+    }
+
+    private int FindQueenPositions(int index, IList<IList<char>> board, int n, int[] columns,int[] upperDiagonal,int[] lowerDiagonal){
+        if(index==n){
+            return 1;
+        }
+        int res = 0;
+        for(int i=0;i<n;i++){
+            if(!QueenAttack(index, i, n, columns, upperDiagonal, lowerDiagonal)){
+                board[index][i]='Q';
+                columns[i]=1;
+                upperDiagonal[n-1+i-index]=1;
+                lowerDiagonal[index+i]=1;
+                res += FindQueenPositions(index+1, board, n, columns, upperDiagonal, lowerDiagonal);
+                upperDiagonal[n-1+i-index]=0;
+                lowerDiagonal[index+i]=0;
+                columns[i]=0;
+                board[index][i]='.';
+            }
+        }
+        return res;
+    }
+
+    private bool QueenAttack(int row, int col, int n, int[] columns,int[] upperDiagonal,int[] lowerDiagonal){
+        return columns[col]==1 || upperDiagonal[n-1+col-row]==1 || lowerDiagonal[row+col]==1;
+    }
+
+    private IList<IList<char>> GetEmptyBoard(int n){
+        var board = new List<IList<char>>();
+        var emptyRow= new List<char>();
+        for(int i=0;i<n;i++){
+            emptyRow.Add('.');
+        }
+        for(int i=0;i<n;i++){
+            board.Add(emptyRow.ToList());
+        }
+        return board;
+    }
+}
