@@ -3,20 +3,18 @@ public class Solution {
         var groupMap = new Dictionary<string, IList<string>>();
         foreach(var str in strs){
             var countKey = GetCountKey(str);
-            if(groupMap.ContainsKey(countKey)){
-                groupMap[countKey].Add(str);
+            if(!groupMap.ContainsKey(countKey)){
+                groupMap[countKey]=new List<string>();
             }
-            else{
-                groupMap[countKey]=new List<string>{str};
-            }
+            groupMap[countKey].Add(str);
         }
         return groupMap.Values.ToList();
     }
     
     string GetCountKey(string str){
         var arr = new int[26];
-        foreach(char c in str){
-            arr[c-'a']+=1;
+        foreach(char ch in str){
+            arr[ch-'a']+=1;
         }
         return string.Join(',', arr);
     }
