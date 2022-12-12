@@ -5,8 +5,8 @@ public class Solution {
         }
         int start = 0, end = 0;
         for(int i=0;i<s.Length;i++){
-            var len1 = GetLengthFromCenter(s, i, i);
-            var len2 = GetLengthFromCenter(s, i, i+1);
+            var len1 = GetPalindromicLengthFromCenter(s, i, i);
+            var len2 = GetPalindromicLengthFromCenter(s, i, i+1);
             var len = Math.Max(len1, len2);
             if(len > end - start){
                 start = i - (len-1)/2;
@@ -16,7 +16,7 @@ public class Solution {
         return s.Substring(start, end-start+1);
     }
     
-    int GetLengthFromCenter(string s, int left, int right){
+    int GetPalindromicLengthFromCenter(string s, int left, int right){
         var len = s.Length;
         while(left >= 0 && right < len && s[left]==s[right]){
             left--;
