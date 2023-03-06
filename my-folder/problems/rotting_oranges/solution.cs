@@ -7,7 +7,7 @@ public class Solution {
         int time = 0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==2 && visited[i,j]==0){
+                if(grid[i][j]==2){
                     queue.Enqueue(new int[]{i, j, 0});
                 }
             }
@@ -21,7 +21,6 @@ public class Solution {
             }
             time = data[2];
             visited[i,j]=1;
-            grid[i][j]=2;
             if(i>0 && grid[i-1][j]==1){
                 queue.Enqueue(new int[]{i-1,j, time+1});
             }
@@ -37,7 +36,7 @@ public class Solution {
         }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==1){
+                if(visited[i,j]==0 && grid[i][j]==1){
                     return -1;
                 }
             }
