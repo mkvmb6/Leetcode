@@ -13,7 +13,6 @@
  */
 public class Solution {
     public IList<IList<int>> FindLeaves(TreeNode root) {
-        var rankMap = new Dictionary<int, IList<int>>();
         var result= new List<IList<int>>();
         GetRank(root, result);
         return result;
