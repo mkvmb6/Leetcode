@@ -10,6 +10,7 @@ public class Solution {
         }
         for(int i=0;i<V;i++){
             foreach(var item in graph[i]){
+                //Reversing the edges and then counting the inDegree on reversed edges.
                 inDegree[i]++;
                 adj[item].Add(i);
             }
@@ -30,6 +31,7 @@ public class Solution {
                     queue.Enqueue(item);
                 }
             }
+            //Because we want the output in sorted order, so can't directly add the nodes in result.
             safeMarked[node]=true;
         }
         for(int i=0;i<V;i++){
