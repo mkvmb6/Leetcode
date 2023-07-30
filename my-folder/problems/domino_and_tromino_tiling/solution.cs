@@ -1,27 +1,20 @@
 public class Solution {
     public int NumTilings(int n) {
-        var cache1 = new Dictionary<int, long>();
-        var cache2 = new Dictionary<int, long>();
-        return (int)Fun1(n, cache1, cache2);
+         var cache = new int[n+1];
+         return FindWays(n, cache);
     }
 
-    long Fun1(int n, Dictionary<int, long> cache1, Dictionary<int, long> cache2){
-        if(cache1.ContainsKey(n)){
-            return cache1[n];
-        }
-        if(n<=2){
+    int FindWays(int n, int[] cache) {
+        if(n <= 2) {
             return n;
         }
-        return cache1[n] = (Fun1(n-1, cache1, cache2) + Fun1(n-2, cache1, cache2) + 2*Fun2(n-1, cache1, cache2))%1000000007;
-    }
-
-    long Fun2(int n, Dictionary<int, long> cache1, Dictionary<int, long> cache2){
-        if(cache2.ContainsKey(n)){
-            return cache2[n];
+        if(n == 3) {
+            return 5;
         }
-        if(n==2){
-            return 1;
+        if(cache[n] != 0) {
+            return cache[n];
         }
-        return cache2[n] = (Fun2(n-1, cache1, cache2) + Fun1(n-2, cache1, cache2))%1000000007;
+        var mod = 1000000007;
+        return cache[n] = (2*FindWays(n - 1, cache)%mod + FindWays(n - 3, cache)%mod)%mod;
     }
 }
